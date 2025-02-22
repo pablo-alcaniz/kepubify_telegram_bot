@@ -31,7 +31,7 @@ OUTPUT_DIR = os.path.join(BASE_DIR, '../OUTPUT_DIR')
 DIR_check(DOWNLOAD_DIR)
 DIR_check(OUTPUT_DIR)
 
-#### BOT ####
+#### BOT FUNCTIONS ####
 
 async def start(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text("Welcome to the (non oficial) Kepubify bot!")
@@ -58,11 +58,8 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
     output_file = remove_par(os.path.join(OUTPUT_DIR, file.file_name.replace(".epub", ".kepub.epub")))
     command = "./kepubify "+str(file_path)+" -o "+str(output_file)
 
-    print(command)    
-
     try:
         os.system(command)
-        #subprocess.run(command, shell=True, check=True)
         await update.message.reply_document(document=open(output_file, "rb"), filename=os.path.basename(output_file))
     except:
         await update.message.reply_text("There was an unknown error.")
@@ -80,10 +77,8 @@ def main():
     app.add_handler(CommandHandler("help", help))
     app.add_handler(CommandHandler("credits", credits))
     app.add_handler(CommandHandler("privacy", privacy))
-
     app.add_handler(MessageHandler(filters.Document.ALL, handle_document))
-
-    print("Bot is running.")
+    
     app.run_polling()
 
 if __name__ == "__main__":
