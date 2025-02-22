@@ -1,10 +1,17 @@
 import os
 import re
-import subprocess
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
 #### BOT CONF ####
+
+# FUNCTIONS
+def remove_par(input_str):
+    return re.sub(r'[()[\]{}]','', input_str)
+
+def DIR_check(DIR):
+    if not os.path.exists(DIR):
+        os.makedirs(DIR) 
 
 # GENERAL CONF
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -15,14 +22,14 @@ TOKEN_PATH = os.path.join(BASE_DIR, '../env/TELEGRAM_API_TOKEN')
 try: 
     with open(TOKEN_PATH, "r", encoding="utf-8") as f:
         TOKEN = f.read().strip()
-        print("---log1: API_TOKEN loaded")
 except FileNotFoundError:
     raise ValueError(f"Token file not found in {TOKEN_PATH}")
 
 # DIRECTORIES
 DOWNLOAD_DIR = os.path.join(BASE_DIR, '../DOWNLOAD_DIR')
 OUTPUT_DIR = os.path.join(BASE_DIR, '../OUTPUT_DIR')
-BINARIES_DIR = os.path.join(BASE_DIR, '../BINARIES')
+DIR_check(DOWNLOAD_DIR)
+DIR_check(OUTPUT_DIR)
 
 #### BOT ####
 
@@ -78,9 +85,6 @@ def main():
 
     print("Bot is running.")
     app.run_polling()
-
-def remove_par(input_str):
-    return re.sub(r'[()[\]{}]','', input_str)
 
 if __name__ == "__main__":
     main()
