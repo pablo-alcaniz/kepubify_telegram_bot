@@ -9,10 +9,6 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 def remove_par(input_str):
     return re.sub(r'[()[\]{}]','', input_str)
 
-def DIR_check(DIR):
-    if not os.path.exists(DIR):
-        os.makedirs(DIR) 
-
 # GENERAL CONF
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BINARY_NAME = "kepubify"
@@ -52,7 +48,6 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
 
     output_file = remove_par(os.path.join(BASE_DIR, file.file_name.replace(".epub", ".kepub.epub")))
     command = BASE_DIR+"/"+BINARY_NAME+" "+str(file_path)+" -o "+str(output_file)
-    print(command)
 
     try:
         os.system(command)
