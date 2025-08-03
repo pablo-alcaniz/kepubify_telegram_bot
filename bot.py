@@ -12,6 +12,10 @@ def remove_par(input_str):
 def remove_space(input_str):
     return re.sub(r'\s+','', input_str)
 
+def DIR_check(DIR):
+    if not os.path.exists(DIR):
+        os.makedirs(DIR)
+
 # GENERAL CONF
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BINARY_NAME = "kepubify"
@@ -49,7 +53,7 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
     new_file = await context.bot.get_file(file.file_id)
     await new_file.download_to_drive(file_path)
 
-    output_file = remove_par(os.path.join(BASE_DIR, file.file_name.replace(".epub", ".kepub.epub")))
+    output_file = remove_space(remove_par(os.path.join(BASE_DIR, file.file_name.replace(".epub", ".kepub.epub"))))
     command = BASE_DIR+"/"+BINARY_NAME+" "+str(file_path)+" -o "+str(output_file)
 
     try:
