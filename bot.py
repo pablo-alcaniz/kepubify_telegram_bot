@@ -10,7 +10,7 @@ def remove_par(input_str):
     return re.sub(r'[()[\]{}]','', input_str)
 
 def remove_space(input_str):
-    return re.sub(r' ','', input_str)
+    return re.sub(r'\s+','', input_str)
 
 # GENERAL CONF
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -34,7 +34,7 @@ async def help(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text("Send a .epub file and I will send you back a .kepub file!")
 
 async def credits(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text("Please, visit the page of the author of the programm KEPUBIFY. https://pgaskin.net/kepubify")
+    await update.message.reply_text("-Please, visit the page of the author of the programm KEPUBIFY. https://pgaskin.net/kepubify \n -Bot made by Pablo Alcañiz (https://github.com/pablo-alcaniz/kepubify_telegram_bot)")
 
 async def privacy(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text("All the files that you send to us are deleted the moment after the converted file is delivered to you.")
