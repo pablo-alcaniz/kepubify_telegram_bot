@@ -9,6 +9,9 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 def remove_par(input_str):
     return re.sub(r'[()[\]{}]','', input_str)
 
+def remove_space(input_str):
+    return re.sub(r' ','', input_str)
+
 # GENERAL CONF
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BINARY_NAME = "kepubify"
@@ -42,7 +45,7 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
         await update.message.reply_text("Please, send me only .epub docs.")
         return
     
-    file_path = remove_par(os.path.join(BASE_DIR, file.file_name))
+    file_path = remove_space(remove_par(os.path.join(BASE_DIR, file.file_name)))
     new_file = await context.bot.get_file(file.file_id)
     await new_file.download_to_drive(file_path)
 
