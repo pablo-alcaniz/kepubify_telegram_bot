@@ -58,12 +58,15 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
     command = BASE_DIR+"/"+BINARY_NAME+" "+str(file_path)+" -o "+str(output_file)
 
     try:
+        await update.message.reply_text("Converting your file, please wait...")
         os.system(command)
+        print("Conversion done.")
         with open(output_file, "rb") as f:
-            await update.message.reply_text("Converting your file, please wait...")
-            await update.message.reply_document(document=f, filename=os.path.basename(output_file))
+            print("Sending file...")
+            await update.message.reply_document(document=f, filename=os.path.basename(output_file), write_timeout=60)
+            print("File sent.")
     except:
-        await update.message.reply_text("There was an unknown error.")
+        await update.message.reply_text("There was an unknown error. Please, try again.")
     finally:
         os.remove(file_path)
         os.remove(output_file)
