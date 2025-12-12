@@ -58,12 +58,14 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
 
     try:
         os.system(command)
-        await update.message.reply_document(document=open(output_file, "rb"), filename=os.path.basename(output_file))
+        with open(output_file, "rb") as f:
+            await update.message.reply_text("Converting your file, please wait...")
+            await update.message.reply_document(document=f, filename=os.path.basename(output_file))
     except:
         await update.message.reply_text("There was an unknown error.")
-
-    os.remove(file_path)
-    os.remove(output_file)
+    finally:
+        os.remove(file_path)
+        os.remove(output_file)
 
 
 #### BOT EXECUTION ####
