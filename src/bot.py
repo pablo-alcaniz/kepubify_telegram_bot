@@ -1,5 +1,6 @@
 import os
 import re
+import gc
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, CallbackContext
 
@@ -66,7 +67,8 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
     finally:
         os.remove(file_path)
         os.remove(output_file)
-
+        gc.collect()
+        print("Garbage collected.")
 
 #### BOT EXECUTION ####
 
