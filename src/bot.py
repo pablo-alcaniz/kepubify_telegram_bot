@@ -36,10 +36,10 @@ async def start(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text("Welcome to the (non oficial) Kepubify bot!")
 
 async def help(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text("Send a .epub file and I will send you back a .kepub file!")
+    await update.message.reply_text("Send a .epub file (20MB max) and I will send you back a .kepub file!")
 
 async def credits(update: Update, context: CallbackContext) -> None:
-    await update.message.reply_text("-Please, visit the page of the author of the programm KEPUBIFY. https://pgaskin.net/kepubify \n -Bot made by Pablo Alcañiz (https://github.com/pablo-alcaniz/kepubify_telegram_bot)")
+    await update.message.reply_text("-Please, visit the page of the author of the software KEPUBIFY. https://pgaskin.net/kepubify \n -Bot made by Pablo Alcañiz (https://github.com/pablo-alcaniz/kepubify_telegram_bot)")
 
 async def privacy(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text("All the files that you send to us are deleted the moment after the converted file is delivered to you.")
@@ -48,6 +48,10 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
     file = update.message.document
     if not file.file_name.endswith(".epub"):
         await update.message.reply_text("Please, send me only .epub docs.")
+        return
+    
+    if file.file_size > 20*1024*1024:
+        await update.message.reply_text("The file is too big. The maximum allowed size by Telegram API is 20MB. If you want to convert bigger files download Kepubify from https://pgaskin.net/kepubify and run it locally or use the Pgaskin web application https://pgaskin.net/kepubify/try/ ")
         return
     
     file_path = remove_space(remove_par(os.path.join(BASE_DIR, file.file_name)))
