@@ -3,3 +3,4 @@ TELEGRAM_API_TOKEN
 *.lock
 env/*
 .venv/*
+src/TELEGRAM_API_TOKEN
