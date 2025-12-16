@@ -58,8 +58,8 @@ async def handle_document(update: Update, context: CallbackContext) -> None:
     new_file = await context.bot.get_file(file.file_id)
     await new_file.download_to_drive(file_path)
 
-    output_file = remove_space(remove_par(os.path.join(BASE_DIR, file.file_name.replace(".epub", ".kepub.epub"))))
-    command = BASE_DIR+"/"+BINARY_NAME+" "+str(file_path)+" -o "+str(output_file)
+    output_file = remove_space(remove_par(os.path.join(BASE_DIR, file.file_name.replace(".epub", ".kepub"))))
+    command = BASE_DIR+"/"+BINARY_NAME+" "+str(file_path)+" -o "+str(output_file)+" --calibre"
 
     try:
         await update.message.reply_text("Converting your file, please wait...")
