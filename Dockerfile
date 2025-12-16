@@ -27,7 +27,6 @@ WORKDIR /app
 
 COPY src/bot.py .
 COPY src/kepubify . 
-COPY src/TELEGRAM_API_TOKEN .
 
 RUN chmod +x ./kepubify
 

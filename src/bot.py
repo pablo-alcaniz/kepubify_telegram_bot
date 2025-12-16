@@ -22,13 +22,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 BINARY_NAME = "kepubify"
 
 # TOKEN CONF
-TOKEN_PATH = os.path.join(BASE_DIR, 'TELEGRAM_API_TOKEN')
-
-try: 
-    with open(TOKEN_PATH, "r", encoding="utf-8") as f:
-        TOKEN = f.read().strip()
-except FileNotFoundError:
-    raise ValueError(f"Token file not found in {TOKEN_PATH}")
+TOKEN = os.environ.get("TELEGRAM_API_TOKEN")
 
 #### BOT FUNCTIONS ####
 
